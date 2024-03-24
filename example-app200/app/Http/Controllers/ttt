@@ -1,0 +1,47 @@
+public function voir(){
+        $id = Auth::user()->id;
+        $command = Command::where('user_id',$id)->get();
+        $data =[];
+
+        foreach($command as $com){
+            if($com->etat == 0){
+
+
+            $prod_id = $com->produit_id;
+                $l=1;
+            $produit1 = produits::where('id',$prod_id)->get();
+            }
+        }
+
+        if($l){
+
+
+        foreach($produit1 as $produit){
+            $t = $produit->artisan_id;
+            $r = $produit->categorie_id;
+
+            $art = Artisan::find($t);
+            $artisan_nom  = $art->nom;
+
+            $cat = Categorie::find($r);
+            $categorie_nom = $cat->nom;
+
+            $f= [
+                'idf' => $produit->id,
+                'nom' => $produit->nom_produit,
+                'prix' => $produit->prix,
+                'nb_rest' => $produit->nb_rest,
+                'description' => $produit->description,
+                'disponible_wilaya' => $produit->disponible_wilaya,
+                'artisan_nom' => $artisan_nom,
+                'categorie_nom' => $categorie_nom,
+        ];
+        array_push($data,$f);
+
+            }
+
+        return view('user.voir_panier')->with('data',$data);
+        }else{
+            return view('user.voir_panier');
+        }
+    }

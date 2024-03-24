@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Controllers\admin\auth;
+
+use App\Models\Admin;
+use App\Models\Artisan;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
+class adminRegisterController extends Controller
+{
+    public function register(){
+        return view('admin.auth.register');
+    }
+    public function store(Request $request){
+        if($request->password == '123456789'){
+            $request->validate([
+                'nom'=>['required','string','min:3'],
+                'prenom'=>['required','string','min:3'],
+                'tel'=>['required','numeric','min:10','unique:artisans'],
+                'email'=>['required','email','unique:artisans'],
+                'password'=>['required','string','min:8','confirmed'],
+                'address'=>['required','string','min:3'],
+            ]);
+            $data = $request->except(['password','_token','password_confirmation','num_artisan']);
+            $data['password'] = Hash::make($request->password);
+            //$data['num_artisan'] = Hash::make($request->num_artisan);
+
+            Admin::create($data);
+            return redirect('admin/login');
+        }else{
+            return back()->with('erreurTT','Somthing Want Wrong');
+        }
+    }
+}
+
