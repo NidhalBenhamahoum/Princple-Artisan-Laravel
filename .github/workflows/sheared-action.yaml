@@ -1,0 +1,11 @@
+name: Sheared Action Example
+on:
+  workflow_dispatch:
+
+jobs:
+  checkout-repo:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - run: ls
