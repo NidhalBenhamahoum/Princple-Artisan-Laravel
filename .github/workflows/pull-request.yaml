@@ -1,0 +1,46 @@
+name: Pull Request Example
+on:
+  
+  workflow_dispatch:
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: typescript-project
+
+    steps:
+    - uses: actions/checkout@v2
+
+   
+
+    # set up nodejs
+    - name: Setup Node.js 16
+      uses: actions/setup-node@v2
+      
+      with:
+        node-version: "16.x"
+        cache: "npm" # Enable caching for npm dependencies
+
+    #install yarn
+    - name: Install Yarn
+      run: npm install -g yarn
+
+    #install laibraries
+    - name: Install Dependencies
+      run: yarn install --frozen-lockfile
+
+    #run linting
+    - name: Run linting
+      run: yarn lint
+
+    # Compile code
+    - name: Build Project
+      run: yarn build
+       
+
+    #run tests (cucumber)
+    - name: Run tests
+      run: yarn test
