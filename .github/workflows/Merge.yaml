@@ -1,6 +1,6 @@
-name: Pull Request Example
+name: Merge Example
 on:
-  pull_request:
+  push:
   # Trigger on pull request eventsbranches
     branches:
       - master
@@ -50,3 +50,14 @@ jobs:
     #run tests (cucumber)
     - name: Run tests
       run: yarn test
+
+    
+
+    - run: git config user.name "nidhal"
+    - run: git config user.email "benhamahoum.nidhal@gmail.com" 
+
+    - name: Commit and Push Changes
+    - run: yarn version  --patch --message "Bump version to %s" # augment version by 1
+
+    - run: git push # this will push to the remote repository
+    - run: git push --follow-tags # this will push the tags to the remote repository
