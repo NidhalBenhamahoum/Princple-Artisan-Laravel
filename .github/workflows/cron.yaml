@@ -1,5 +1,7 @@
 name: Cron Example
 on:
+  schedule:
+    - cron: "* * * * *"
   workflow_dispatch:
 
 jobs:
