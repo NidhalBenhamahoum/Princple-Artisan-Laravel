@@ -1,6 +1,12 @@
 name: Pull Request Example
 on:
-  
+  pull_request:
+  # Trigger on pull request eventsbranches
+    branches:
+      - master
+    paths:
+      - typescript-project/** # Only run for changes in the typescript-project directory
+    
   workflow_dispatch:
 
 jobs:
